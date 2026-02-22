@@ -4,7 +4,7 @@
 here, i'm going to implement a best-fit bin packing algorithm.
 
 one important note about this algorithm is that it doesn't account for the varying bin (bar) sizes.
-to correct this issue, i'll make the bars be selected in descending, ascending, and random order of their lengths over multiple passes.
+to correct this issue, i'll make the bars be selected in every permutation, over multiple passes.
 
 obviously, this won't result in an optimal result, but i might add some substitution magic into this later.
 """
@@ -12,6 +12,7 @@ obviously, this won't result in an optimal result, but i might add some substitu
 # TODO: substitution magic
 
 # inputs
+import itertools
 import random
 
 
@@ -48,6 +49,8 @@ print("cuts:", cuts)
 
 print()
 
+print("trying all permutations of bars")
+
 testlist = []
 
 def test(b, c):
@@ -57,10 +60,11 @@ def test(b, c):
     except:
         return "errored"
 
-print("ascending bars:", test(sorted(bars), sorted(cuts, reverse=True)))
-print("descending bars:", test(sorted(bars, reverse=True), sorted(cuts, reverse=True)))
-print("random order bars:", test(random.sample(bars, k=len(bars)), sorted(cuts, reverse=True)))
+for b in itertools.permutations(bars):
+    print(test(b, sorted(cuts, reverse=True)))
 
 best = sorted(testlist, key=lambda i: i["items"].count([]), reverse=True)
+
+print()
 
 print("best:", best[0])
