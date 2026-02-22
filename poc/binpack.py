@@ -52,7 +52,7 @@ testlist = []
 
 def test(b, c):
     try:
-        testlist.append([b, binpack(b, c)])
+        testlist.append({"bars": b, "items": binpack(b, c)})
         return testlist[-1]
     except:
         return "errored"
@@ -61,6 +61,6 @@ print("ascending bars:", test(sorted(bars), sorted(cuts, reverse=True)))
 print("descending bars:", test(sorted(bars, reverse=True), sorted(cuts, reverse=True)))
 print("random order bars:", test(random.sample(bars, k=len(bars)), sorted(cuts, reverse=True)))
 
-best = sorted(testlist, key=lambda i: i[1].count([]), reverse=True)
+best = sorted(testlist, key=lambda i: i["items"].count([]), reverse=True)
 
 print("best:", best[0])
